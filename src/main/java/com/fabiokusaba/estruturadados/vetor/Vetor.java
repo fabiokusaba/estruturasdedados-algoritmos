@@ -1,5 +1,7 @@
 package com.fabiokusaba.estruturadados.vetor;
 
+import java.util.Arrays;
+
 // Um vetor (ou array) é a estrutura de dados mais simples que existe. Um vetor armazena uma sequência de valores onde
 // todos são do mesmo tipo
 public class Vetor {
@@ -50,6 +52,7 @@ public class Vetor {
 //        }
 //    }
 
+    // Metodo responsável por adicionar um elemento no vetor
     public boolean adiciona(String elemento) {
         // Precisamos antes fazer uma verificação se o tamanho é menor que a capacidade do vetor de elementos
         if (this.tamanho < this.elementos.length) {
@@ -63,5 +66,34 @@ public class Vetor {
             return true;
         }
         return false;
+    }
+
+    // Metodo responsável por retornar o tamanho do nosso vetor
+    public int tamanho() {
+        return this.tamanho;
+    }
+
+    // O Java possui uma classe utilitária chamada Arrays que serve para a gente poder trabalhar com coleções de objetos
+    // como, por exemplo, vetores. Essa classe Arrays possui o metodo 'toString' onde nós podemos passar um vetor de
+    // elementos e ela retorna todos os elementos do Array
+    @Override
+    public String toString() {
+        // O que a gente precisa fazer aqui é iterar por todos os elementos do nosso vetor e adicionar na nossa String
+        // Para deixar o nosso código mais eficiente vamos fazer a concatenação dos nossos elementos utilizando a classe
+        // StringBuilder
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        for (int i = 0; i < this.tamanho - 1; i++) {
+            sb.append(this.elementos[i]);
+            sb.append(", ");
+        }
+
+        if (this.tamanho > 0) {
+            sb.append(this.elementos[this.tamanho - 1]);
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }

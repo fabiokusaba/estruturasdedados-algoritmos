@@ -168,6 +168,26 @@ public class Vetor {
         return -1;
     }
 
+    // Remover elemento
+    public void  remove(int posicao) {
+        // Já que essa posição que estamos passando aqui é um índice já temos um código pronto para verificar se essa
+        // posição é valida ou não
+        if (!(posicao >= 0 && posicao < this.tamanho)) {
+            throw new IllegalArgumentException("Posição inválida");
+        }
+        
+        // A gente também vai iterar os elementos só que o nosso 'i' não vai receber o 'tamanho - 1', da mesma forma que
+        // fizemos no diagrama visual vamos empurrar os elementos desta forma a nossa variável 'i' vai receber a posição
+        // a ser removida, ele vai preciar ser menor que 'tamanho - 1' e como estamos crescendo vamos aumentar em + 1
+        for (int i = posicao; i < this.tamanho - 1; i++) {
+            // Agora podemos fazer as atribuições
+            this.elementos[i] = this.elementos[i + 1];
+        }
+
+        // E por fim, já que removemos um elemento o que nós vamos fazer é diminuir o tamanho do vetor
+        this.tamanho--;
+    }
+
     // Metodo responsável por retornar o tamanho do nosso vetor
     public int tamanho() {
         return this.tamanho;

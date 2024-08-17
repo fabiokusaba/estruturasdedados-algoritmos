@@ -1,10 +1,10 @@
 package com.fabiokusaba.estruturadados.vetor.teste;
 
-import com.fabiokusaba.estruturadados.vetor.VetorObjeto;
+import com.fabiokusaba.estruturadados.vetor.VetorObjetos;
 
 public class Aula10 {
     public static void main(String[] args) {
-        VetorObjeto vetor = new VetorObjeto(3);
+        VetorObjetos vetor = new VetorObjetos(3);
 
         Contato c1 = new Contato("Contato 1", "1234-4567", "contato1@email.com");
         Contato c2 = new Contato("Contato 2", "2345-6789", "contato2@email.com");

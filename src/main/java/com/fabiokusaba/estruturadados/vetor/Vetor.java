@@ -68,6 +68,25 @@ public class Vetor {
         return false;
     }
 
+    // No nosso metodo de busca a gente quer obter um elemento de uma determinada posição, então aqui no retorno do
+    // nosso metodo precisa ser o tipo de um elemento do nosso vetor que a gente declarou originalmente como String
+    public String busca(int posicao) {
+        // Aqui no nosso metodo de busca precisamos fazer um tratamento um pouco melhor para garantir que na hora que o
+        // usuário utilizar não vai dar uma exceção a gente só quer liberar uma exceção quando realmente for preciso
+        // As posições que existem dentro desse vetor que tem elementos é que a posição precisa ser maior igual a zero
+        // já que o nosso índice começa a partir do zero e a posição ela também tem que ser menor que o tamanho e essas
+        // são as posições que existem no nosso vetor, se a gente negar toda essa expressão a gente tem o range de todas
+        // as posições que não podem ser acessadas
+        // Quando a posição não poder ser acessada podemos lançar uma Exception
+        // A IllegalArgumentException é uma exceção especial no Java para tipos de argumentos que são inválidos
+        if (!(posicao >= 0 && posicao < this.tamanho)) {
+            throw new IllegalArgumentException("Posição inválida");
+        }
+
+        // Se cair dentro de uma posição que existe no nosso vetor a gente retorna o elemento desejado
+        return this.elementos[posicao];
+    }
+
     // Metodo responsável por retornar o tamanho do nosso vetor
     public int tamanho() {
         return this.tamanho;

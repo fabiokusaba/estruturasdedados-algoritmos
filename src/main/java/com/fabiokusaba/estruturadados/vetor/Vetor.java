@@ -54,6 +54,8 @@ public class Vetor {
 
     // Metodo responsável por adicionar um elemento no vetor
     public boolean adiciona(String elemento) {
+        this.aumentaCapacidade();
+
         // Precisamos antes fazer uma verificação se o tamanho é menor que a capacidade do vetor de elementos
         if (this.tamanho < this.elementos.length) {
             // O que a gente precisa fazer aqui basicamente é já que a gente está guardando qual foi a última posição que a
@@ -77,6 +79,8 @@ public class Vetor {
             throw new IllegalArgumentException("Posição inválida");
         }
 
+        this.aumentaCapacidade();
+
         // Agora podemos pensar na lógica para mover os elementos, para a gente mover os elementos vamos utilizar um for
         // para iterar o nosso vetor, aqui dentro do nosso for o nosso 'i' não vai de 0 até o length do nosso vetor como
         // a gente está acostumado a fazer nos outros códigos, nós vamos inicializar o 'i' com uma outra variável aqui
@@ -97,6 +101,32 @@ public class Vetor {
 
         return true;
     }
+
+    // Aumentar capacidade no vetor, como esse metodo vai ser utilizado apenas internamente na nossa classe Vetor vou
+    // declarar ele como privado
+    private void aumentaCapacidade() {
+        // Precisamos verificar quando é que vamos aumentar a capacidade do vetor? É sempre que o nosso 'tamanho' do
+        // vetor for igual ao length do vetor que é a capacidade que o vetor tem
+        if (this.tamanho == this.elementos.length) {
+            // Como é que a gente faz isso? Declarando um novo vetor já que o nosso vetor de elementos é do tipo String
+            // então vou declarar um vetor de String e vou chamá-lo de 'elementosNovos' e vou instânciá-lo
+            // E o que passo aqui? Capacidade + 1? A melhor forma da gente fazer aqui é sempre dobrando a capacidade do
+            // vetor
+            String[] elementosNovos = new String[this.elementos.length * 2];
+
+            // O que vamos fazer aqui é muito simples, vamos iterar o nosso vetor
+            for (int i = 0; i < this.elementos.length; i++) {
+                // O que a gente vai fazer? Basicamente a gente vai atribuir a posição 0 do 'elementosNovos' o que está
+                // na posição 0 do nosso vetor
+                elementosNovos[i] = this.elementos[i];
+            }
+
+            // O que nós vamos fazer então é atribuir esse novo vetor ao nosso vetor e lembrando que esse código só vai
+            // ser executado quando atingirmos a capacidade
+            this.elementos = elementosNovos;
+        }
+    }
+
 
     // No nosso metodo de busca a gente quer obter um elemento de uma determinada posição, então aqui no retorno do
     // nosso metodo precisa ser o tipo de um elemento do nosso vetor que a gente declarou originalmente como String

@@ -3,11 +3,11 @@ package com.fabiokusaba.estruturadados.vetor;
 // Generalizar a classe para que ela possa trabalhar com qualquer tipo do Java seja um inteiro, double ou uma classe
 // Aprendemos que a super classe ou a classe mãe de todas as classes no Java é a classe 'Object', então a maneira mais
 // simples de deixar a nossa classe genérica seria trocar o 'String' por 'Object'
-public class VetorGenerico {
+public class VetorObjeto {
     private Object[] elementos;
     private int tamanho;
 
-    public VetorGenerico(int capacidade) {
+    public VetorObjeto(int capacidade) {
         this.elementos = new Object[capacidade];
         this.tamanho = 0;
     }

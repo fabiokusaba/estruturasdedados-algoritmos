@@ -87,6 +87,27 @@ public class Vetor {
         return this.elementos[posicao];
     }
 
+    // Implementar um metodo para descobrir/verificar se um determinado elemento existe no vetor
+    // Quando a gente quer verificar se um elemento existe ou não dentro de uma determinada coleção a gente pode
+    // retornar um booleano pra identificar se aquele elemento existe ou não
+    // Porém, existe uma maneira um pouquinho mais elegante da gente fazer isso aqui ao invés de retornar true ou false
+    // que é retornando a própria posição do vetor
+    public int busca(String elemento) {
+        // Nesse caso vamos fazer um algoritmo de busca e o algoritmo de busca mais simples que existe é o algoritmo
+        // chamado busca sequencial, o que acontece nesse algoritmo? A gente vai posição em posição do nosso vetor e a
+        // gente vai verificar se aquele elemento é o elemento que a gente está procurando
+        for (int i = 0; i < this.tamanho; i++) {
+            // Lembrando que como a String é um objeto a gente não pode utilizar o comparador de igualdade '==' no Java
+            // a gente precisa utilizar o metodo 'equals', como é String a gente tem duas opções: a gente tem o metodo
+            // 'equals' e o metodo 'equalsIgnoreCase', o 'equalsIgnoreCase' não vai levar em consideração se a letra é
+            // maiúscula ou minúscula
+            if (this.elementos[i].equals(elemento)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     // Metodo responsável por retornar o tamanho do nosso vetor
     public int tamanho() {
         return this.tamanho;

@@ -68,6 +68,36 @@ public class Vetor {
         return false;
     }
 
+    // Adicionando elemento em qualquer posição do vetor aqui nós vamos fazer um overloading, ou seja, vamos
+    // sobrecarregar o metodo 'adiciona' passando como parâmetros o 'elemento' e a 'posição' que queremos adicionar
+    public boolean adiciona(String elemento, int posicao) {
+        // Primeira coisa que a gente precisa fazer é verificar se a posição que o usuário está passando para esse
+        // metodo é uma posição válida
+        if (!(posicao >= 0 && posicao < this.tamanho)) {
+            throw new IllegalArgumentException("Posição inválida");
+        }
+
+        // Agora podemos pensar na lógica para mover os elementos, para a gente mover os elementos vamos utilizar um for
+        // para iterar o nosso vetor, aqui dentro do nosso for o nosso 'i' não vai de 0 até o length do nosso vetor como
+        // a gente está acostumado a fazer nos outros códigos, nós vamos inicializar o 'i' com uma outra variável aqui
+        // nós vamos inicializar ela com o valor do nosso 'tamanho' e a variável 'i' precisa ser maior ou igual a
+        // posição que a gente está passando já que a gente foi até o índice da posição que a gente desejava e moveu os
+        // elementos daquela posição pra frente e ao invés de incrementar nós vamos decrementar já que a gente está
+        // iterando o vetor de trás pra frente
+        for (int i = this.tamanho - 1; i >= posicao; i--) {
+            // Agora vamos focar na nossa lógica de mover os elementos
+            this.elementos[i + 1] = this.elementos[i];
+        }
+
+        // Depois de mover todos os elementos a gente só precisa atribuir o elemento para a posição
+        this.elementos[posicao] = elemento;
+
+        // E também adicionamos 1 para o nosso tamanho
+        this.tamanho++;
+
+        return true;
+    }
+
     // No nosso metodo de busca a gente quer obter um elemento de uma determinada posição, então aqui no retorno do
     // nosso metodo precisa ser o tipo de um elemento do nosso vetor que a gente declarou originalmente como String
     public String busca(int posicao) {

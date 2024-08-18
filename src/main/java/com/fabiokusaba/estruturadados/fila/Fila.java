@@ -41,4 +41,20 @@ public class Fila<T> extends EstruturaEstatica<T> {
 
         return this.elementos[0];
     }
+
+    // Removendo um elemento da primeira posição do vetor
+    public T desenfileira() {
+        final int POS = 0;
+
+        // Primeiro vou perguntar se a fila está vazia
+        if (this.estaVazia()) {
+            return null;
+        }
+
+        T elementoASerRemovido = this.elementos[POS];
+
+        this.remove(POS);
+
+        return elementoASerRemovido;
+    }
 }

@@ -31,4 +31,14 @@ public class Fila<T> extends EstruturaEstatica<T> {
         // Ou caso a gente queira simplificar esse algoritmo aqui
 //        this.elementos[this.tamanho++] = elemento;
     }
+
+    // Retornando o primeiro elemento da nossa fila
+    public T espiar() {
+        // Se você quiser ter um pouco mais de precaução o que a gente pode fazer é:
+        if (this.estaVazia()) {
+            return null;
+        }
+
+        return this.elementos[0];
+    }
 }

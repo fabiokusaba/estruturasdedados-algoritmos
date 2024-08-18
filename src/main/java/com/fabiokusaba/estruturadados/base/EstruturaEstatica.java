@@ -13,6 +13,12 @@ public class EstruturaEstatica<T> {
         this(10);
     }
 
+    // Se esta condição for verdadeira retorna 'true' e significa que a nossa estrutura está vazia, caso contrário
+    // retorna 'false' e significa que a nossa estrutura possui elementos
+    public boolean estaVazia() {
+        return this.tamanho == 0;
+    }
+
     // Vamos utilizar o modificador de acesso 'protected' porque assim só as classes que pertencem ao pacote base e as
     // filhas dessa 'EstruturaEstatica' é que poderão ver esse metodo
     protected boolean adiciona(T elemento) {

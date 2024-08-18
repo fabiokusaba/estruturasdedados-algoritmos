@@ -29,4 +29,18 @@ public class Pilha<T> extends EstruturaEstatica<T> {
         // fazendo reuso de código para um código que já existe aqui
         super.adiciona(elemento);
     }
+
+    public T topo() {
+        // Se a pilha estiver vazia isso vai gerar uma exceção e a gente não quer que isso aconteça, então primeiro a
+        // gente precisa verificar se a pilha está vazia
+        if (this.estaVazia()) {
+            // Se a pilha estiver vazia a gente pode retornar nulo porque não tem nada a ser visto no topo da pilha
+            return null;
+        }
+
+        // Se ela não estiver vazia a gente precisa retornar o elemento
+        // Então, o que a gente precisa fazer? A gente sabe que o topo da pilha é 'tamanho - 1', então poderíamos fazer
+        // o seguinte:
+        return this.elementos[tamanho - 1];
+    }
 }

@@ -150,6 +150,29 @@ public class Lista<T> {
         }
     }
 
+    public void limpar() {
+        // Existem três maneiras que a gente pode fazer isso: a primeira delas seria instânciar o elemento e assim
+        // a gente teria um novo vetor, nesse caso como o vetor de elementos está fazendo referência para um novo objeto
+        // os elementos que estavam no outro vetor e todas as referências vão ficar livres para que o coletor de lixo
+        // do Java possa varrer a memória e possa limpar todos aqueles objetos da memória
+//        this.elementos = (T[]) new Object[this.elementos.length];
+
+        // A opção número 2 seria fazer o que? A gente poderia resetar o 'tamanho' para 0 e todos os elementos que já
+        // tiverem dentro do nosso array ficariam ali como uma espécie de lixo
+//        this.tamanho = 0;
+
+        // E uma terceira opção envolve também em colocar o 'tamanho' igual a 0 só que envolveria a gente atribuir o
+        // valor nulo para todas as posições do elemento, dessa forma a gente também vai perder a referência de todos os
+        // valores que estão dentro do array e caso forem objetos os mesmos ficam disponíveis pro coletor de lixo do
+        // Java
+        // Dependendo do tamanho do vetor que você tiver essa pode ser a melhor opção porque a gente está também
+        // liberando várias referências na memória pro coletor de lixo do Java
+        for (int i = 0; i < this.tamanho; i++) {
+            this.elementos[i] = null;
+        }
+        this.tamanho = 0;
+    }
+
     // Metodo responsável por retornar o tamanho do nosso vetor
     public int tamanho() {
         return this.tamanho;

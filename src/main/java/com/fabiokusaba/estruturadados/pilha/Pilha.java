@@ -43,4 +43,29 @@ public class Pilha<T> extends EstruturaEstatica<T> {
         // o seguinte:
         return this.elementos[tamanho - 1];
     }
+
+    // É comum na estrutura de dados pilha que quando a gente remove/desempilha esse elemento a gente também retorne ele
+    public T desempilha() {
+        // Só que se a pilha estiver vazia esse código aqui vai dar uma exceção e a gente não quer isso, então é claro
+        // que a gente precisa verificar se a pilha está vazia primeiro
+        if (this.estaVazia()) {
+            return null;
+        }
+
+        // Após a verificação podemos executar o trecho de código abaixo:
+        // O que precisamos fazer? A gente precisa retornar o último elemento que está na pilha, ou seja, é o elemento
+        // que está no topo, então poderíamos fazer algo assim:
+        T elemento = this.elementos[tamanho - 1];
+
+        // Depois nós podemos diminuir o tamanho
+        tamanho--;
+
+        // E finalmente fazer o retorno desse elemento
+        return elemento;
+
+        // É possível simplificar as três linhas de código acima da seguinte forma:
+        // O que acontece? Primeiro vai ser diminuído 1 do tamanho, mas ao fazer isso daqui aqui dentro primeiro é
+        // diminuído 1 do tamanho e aí sim depois é feito o acesso a posição específica do elemento
+//        return this.elementos[--tamanho];
+    }
 }

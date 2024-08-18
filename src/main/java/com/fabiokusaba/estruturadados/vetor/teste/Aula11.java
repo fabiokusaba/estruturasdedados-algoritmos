@@ -1,7 +1,6 @@
 package com.fabiokusaba.estruturadados.vetor.teste;
 
 import com.fabiokusaba.estruturadados.vetor.Lista;
-import com.fabiokusaba.estruturadados.vetor.VetorObjetos;
 
 public class Aula11 {
     public static void main(String[] args) {

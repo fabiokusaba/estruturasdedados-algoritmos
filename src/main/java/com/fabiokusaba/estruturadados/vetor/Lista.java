@@ -89,6 +89,28 @@ public class Lista<T> {
         return -1;
     }
 
+    public int ultimoIndice(T elemento) {
+        // Existem diferentes maneiras da gente poder fazer essa lógica, a primeira delas seria:
+//        int ultimaPos = -1;
+//        for (int i = 0; i < this.tamanho; i++) {
+//            if (this.elementos[i].equals(elemento)) {
+//                ultimaPos = i;
+//            }
+//        }
+
+        // Uma maneira da gente fazer isso aqui muito mais rápido ao invés de iterar esse array do início dele até o
+        // final é fazer justamente o contrário começar a iteração do final até chegar a posição 0, assim a gente teria
+        // essa mesma lógica e a primeira vez que ele encontrar o elemento a gente já pode retornar o índice já que a
+        // gente vai estar iterando de trás pra frente e não de frente para trás como a gente fez no metodo 'busca'
+        for (int i = this.tamanho - 1; i >= 0; i--) {
+            if (this.elementos[i].equals(elemento)) {
+                return i;
+            }
+        }
+        // Se não existir o elemento vou retornar -1
+        return -1;
+    }
+
     public boolean contem(T elemento) {
 //        int pos = busca(elemento);
 //        if (pos > -1) {

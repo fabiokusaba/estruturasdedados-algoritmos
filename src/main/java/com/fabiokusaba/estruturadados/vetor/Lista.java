@@ -72,6 +72,12 @@ public class Lista<T> {
         }
     }
 
+    // A gente está criando um novo metodo reutilizando uma lógica que já existe para caso o usuário precise com outro
+    // nome, porém que já faz a mesma coisa de um metodo existente na nossa classe
+    public T obtem(int posicao) {
+        return this.busca(posicao);
+    }
+
     public T busca(int posicao) {
         if (!(posicao >= 0 && posicao < this.tamanho)) {
             throw new IllegalArgumentException("Posição inválida");

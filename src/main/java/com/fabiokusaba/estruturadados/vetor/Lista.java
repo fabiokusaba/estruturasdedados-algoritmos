@@ -133,6 +133,17 @@ public class Lista<T> {
         this.tamanho--;
     }
 
+    // Uma forma bem simples da gente sobrecarregar o nosso metodo modificando aqui o tipo de parâmetro que ele utiliza
+    public void remove(T elemento) {
+        // A gente pode utilizar o metodo 'busca' para poder ver se o elemento existe dentro do vetor
+        int pos = this.busca(elemento);
+
+        // E se caso ele existe a gente pode fazer a remoção passando então o índice para esse metodo 'remove'
+        if (pos > -1) {
+            this.remove(pos);
+        }
+    }
+
     // Metodo responsável por retornar o tamanho do nosso vetor
     public int tamanho() {
         return this.tamanho;

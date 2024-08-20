@@ -17,7 +17,19 @@ package com.fabiokusaba.estruturadados.lista;
 // de números, strings, objetos e etc
 public class ListaEncadeada<T> {
     // Cada lista tem um nó e esse nó ou célula tem duas informações
+    // Esse 'inicio' a gente não gera nem o get e nem o set porque nós que queremos ter o controle, então esse controle dos
+    // valores que vão ser atribuídos pra esse atributo serão apenas internamente isso não vai ser exposto pra quem for
+    // utilizar a nossa API a nossa lista encadeada
     private No<T> inicio;
+
+    // A gente quer fazer o controle de quantos nós a gente tem porque afinal se a gente tiver 10 elementos a gente não quer
+    // percorrer toda a lista pra poder ficar contando quantos elementos a gente tem porque isso seria muito custoso do ponto de
+    // vista computacional e como alternativa pra ter essa informação sempre disponível pra gente nós vamos criar aqui mais um
+    // atributo/variável pra poder ajudar a gente a fazer esse controle 
+    // Por padrão aqui no Java valores primitivos eles sempre começam com 0, mas se a gente quiser deixar isso explícito podemos
+    // atribuir o valor 0
+    // A gente sempre vai levar em consideração essa variável sempre que a gente adicionar elementos ou remover elementos também
+    private int tamanho = 0;
 
     // O próximo passo é criarmos o nosso primeiro metodo para poder adicionar um elemento
     // Aqui nesse metodo o nó é algo interno nosso, então para quem vai usar essa lista a única coisa que importa é o objeto
@@ -34,6 +46,16 @@ public class ListaEncadeada<T> {
         // Quando a gente faz isso, lembrando que no Java nós estamos trabalhando apenas com as referências que nos diagramas são
         // as setinhas
         this.inicio = celula;
+
+        // E agora que a gente tem esse 'tamanho' também a gente tem o metodo 'adiciona' o que a gente pode fazer também é pegar
+        // o 'tamanho' e incrementar o seu valor em 1
+        this.tamanho++;
+    }
+
+    // Além disso, vou criar também um metodo para retornar esse 'tamanho', lembrando que não temos um set para esse 'tamanho'
+    // porque essa variável vai ficar disponível apenas internamente pra gente
+    public int getTamanho() {
+        return this.tamanho;
     }
 
     @Override

@@ -97,9 +97,60 @@ public class ListaEncadeada<T> {
         return this.tamanho;
     }
 
+    // Imagine o seguinte problema: dado uma lista encadeada você quer percorrer cada elemento e a gente quer imprimir na tela o
+    // valor de cada elemento como é que a gente pode fazer isso? Pra gente poder fazer isso a gente vai começar com uma referência
+    // que a gente também chama de vez em quando de ponteiro, geralmente vai ser uma variável chamada 'atual', e essa variável 'atual'
+    // nós vamos atribuir o valor início ou o primeiro elemento da nossa lista
+    // Dado o elemento atual enquanto o seu próximo for diferente de nulo, ou seja, tiver um próximo elemento a gente consegue obter
+    // o próximo elemento movendo esse ponteiro, ou seja, atribuindo o valor de 'atual.proximo' para 'atual', e quando o 'atual.proximo'
+    // for nulo, ou seja, ele não estiver apontando para nada nesse caso não tem mais o que a gente percorrer sai do loop, sai da
+    // iteração e a gente conseguiu percorrer toda a lista
     @Override
     public String toString() {
-        return "ListaEncadeada [inicio=" + inicio + "]";
+        // A primeira coisa que a gente vai fazer é se a lista estiver vazia, inclusive posso fazer essa verificação primeiro para
+        // evitar instânciar variáveis que não são necessárias
+        if (this.tamanho == 0) {
+            // O que nós vamos retornar vai ser apenas um array vazio
+            return "[]";
+        }
+
+        StringBuilder builder = new StringBuilder("[");
+
+        // Se não, a gente começa a nossa lógica
+        // A primeira coisa que a gente vai fazer é declarar uma variável atual que vai receber o inicio porque precisamos começar
+        // de algum lugar se fosse iterar isso aqui num array a gente começaria da posição 0 e nesse caso a posição 0 é o início e
+        // aqui a gente consegue garantir já que a lista não está vazia pelo menos um elemento nós vamos ter
+        No<T> atual = this.inicio;
+
+        // Depois a gente vai colocar aqui o while que é o enquanto, então enquanto o 'atual.getProximo' for diferente de nulo a
+        // gente faz algo
+        // Mas, antes disso a gente precisa obter esse valor aqui que está no atual que é o primeiro, então aqui nós vamos fazer o
+        // append do valor que está no nosso nó e além disso vou fazer o append da vírgula só pra poder separar o nosso elemento
+        /* builder.append(atual.getElemento()).append(",");
+
+        while (atual.getProximo() != null) {
+            // Ou seja, nós vamos mover para o próximo elemento
+            atual = atual.getProximo();
+
+            // Movendo para o próximo elemento nós vamos repetir esse trecho de código aqui porque aí nós já vamos estar no segundo
+            // elemento
+            builder.append(atual.getElemento()).append(",");
+        } */
+
+        // Aqui no Java a gente tem o loop for também que a gente consegue fazer isso com uma forma um pouco mais elegante, dado que
+        // o tamanho é diferente de 0 a gente pode colocar um for
+        // Eu vou pegar o tamanho até o 'tamanho - 1', ou seja, parar no penúltimo elemento da minha lista, quando for o penúltimo
+        // elemento da minha lista esse 'atual.getProximo' para no penúltimo e o que a gente consegue fazer? A gente consegue fazer
+        // apenas esse append do último elemento
+        for (int i = 0; i < this.tamanho - 1; i++) {
+            builder.append(atual.getElemento()).append(",");
+            atual = atual.getProximo();
+        }
+
+        builder.append(atual.getElemento()).append("]");
+
+        // E no final a gente consegue retornar a nossa String
+        return builder.toString();
     }
 
     

@@ -97,6 +97,41 @@ public class ListaEncadeada<T> {
         return this.tamanho;
     }
 
+    // Como é que a gente remove todos os itens de uma lista encadeada? Seria muito simples se a gente apenas atribuísse o valor de
+    // nulo para o início da lista, dessa maneira todos os outros elementos vão ficar perdidos na memória e a nossa lista vai voltar
+    // para tamanho 0, essa é uma das implementações que você pode fazer e também seria a forma mais simples da gente fazer isso
+    // Só que a gente sempre tenta fazer as coisas da melhor forma que a gente pode, então nesse caso o que nós vamos fazer é tentar
+    // seguir o próprio código da lista encadeada do Java, nós vamos percorrer toda a lista e a gente vai atribuir o valor nulo para
+    // cada elemento, por que a gente precisa fazer isso? Isso apenas vai otimizar a memória do Java e vai fazer com que os elementos
+    // já fiquem disponíveis pra o limpador de lixo (Garbage Collector do Java), então isso acaba otimizando e acelerando um pouco
+    // mais a limpeza da memória
+    public void limpa() {
+        // A outra forma que também é a forma que o Java faz a limpeza da lista encadeada é percorrer toda a lista e atribuir o nulo
+        // também pra essa variável
+        // O loop for consiste de três partes: a primeira parte onde nós declaramos e inicializamos a variável, a segunda parte é onde
+        // colocamos a nossa condição para poder sair do loop e a terceira parte é onde a gente pode, por exemplo, incrementar essa
+        // variável
+        for (No<T> atual = this.inicio; atual != null;) {
+            // Declarando um segundo nó auxiliar que vou chamar de próximo e ele sempre vai ser o 'atual.getProximo'
+            No<T> proximo = atual.getProximo();
+
+            // Setando os valores para nulo
+            atual.setElemento(null);
+            atual.setProximo(null);
+
+            // Pegando o atual e atribuindo a variável próximo
+            atual = proximo;
+
+            // E com isso vamos iterar a lista inteira e limpar pra gente
+        }
+
+        // A maneira mais simples: para limpar a lista a gente precisaria incluir nulo pro início, atribuir nulo pro último e o
+        // tamanho também ficaria com 0
+        this.inicio = null;
+        this.ultimo = null;
+        this.tamanho = 0;
+    }
+
     // Imagine o seguinte problema: dado uma lista encadeada você quer percorrer cada elemento e a gente quer imprimir na tela o
     // valor de cada elemento como é que a gente pode fazer isso? Pra gente poder fazer isso a gente vai começar com uma referência
     // que a gente também chama de vez em quando de ponteiro, geralmente vai ser uma variável chamada 'atual', e essa variável 'atual'

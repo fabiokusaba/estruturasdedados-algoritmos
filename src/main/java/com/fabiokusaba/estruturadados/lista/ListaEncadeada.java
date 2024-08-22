@@ -34,6 +34,10 @@ public class ListaEncadeada<T> {
     // A gente sempre vai levar em consideração essa variável sempre que a gente adicionar elementos ou remover elementos também
     private int tamanho = 0;
 
+    // Só que o -1 pode ficar um pouco estranho pra quem não está acostumado com isso, então uma dica de código limpo que a gente
+    // acaba adotando é declarar uma variável que indique aquilo que a gente queira fazer 
+    private final int NAO_ENCONTRADO = -1;
+
     // O próximo passo é criarmos o nosso primeiro metodo para poder adicionar um elemento
     // Aqui nesse metodo o nó é algo interno nosso, então para quem vai usar essa lista a única coisa que importa é o objeto
     // é o valor
@@ -132,6 +136,89 @@ public class ListaEncadeada<T> {
         this.tamanho = 0;
     }
 
+    // A gente não quer expor o nó para fora da nossa classe, então pra isso vamos criar um terceiro metodo ainda e vou retornar
+    // aqui um nó, esse metodo vai ser apenas privado
+    private No<T> buscaNo(int posicao) {
+        // Então, antes de começar a fazer a gente vai precisar verificar se a posição existe
+        // Se a posição for maior ou igual a 0, e se a posição for menor ou igual ao tamanho da nossa lista significa que a gente
+        // tem uma posição que existe, mas nesse caso eu quero verificar se a posição não existe então basta eu negar a expressão
+        if (!(posicao >= 0 && posicao <= this.tamanho)) {
+            // Se esse for o caso, a posição não existir, a gente vai lançar uma exceção
+            throw new IllegalArgumentException("Posição não existe");
+        }
+
+        // E aí sim a gente pode colocar a nossa lógica aqui porque a gente sabe que vai ser uma lógica válida que a gente já fez
+        // a verificação aqui em cima
+        // Vamos começar a iterar e a gente sabe que a gente vai precisar de um nó atual e note que todos os algoritmos de lista
+        // estão começando sempre assim: o nó atual está recebendo o início da nossa lista
+        No<T> noAtual = this.inicio;
+
+        // Vou declarar uma variável 'i' que vai começar do 0, ou seja, vai começar do início, a gente vai iterar até a posição
+        // que a gente está buscando
+        for (int i = 0; i < posicao; i++) {
+            // Até a gente chegar uma posição antes daquela que a gente está buscando a gente vai fazer o nó atual receber o
+            // seu próximo, ou seja, nós apenas vamos mover o ponteiro de um nó para outro nó
+            noAtual = noAtual.getProximo();
+        }
+
+        // Quando a gente terminar essa última iteração esse nó atual vai estar apontando pro nó que a gente está buscando, então
+        // nesse caso é só retornar o nó atual
+        return noAtual;
+    }
+
+    // Quando nós tivermos buscando uma posição nós vamos retornar o elemento em si e não o nó, afinal a gente não quer que a
+    // pessoa que esteja buscando ache o nó pra poder manusear os ponteiros, as referências a gente quer apenas que essa pessoa
+    // tenha acesso ao valor, então aqui nós vamos retornar T porque ele significa qual que é o tipo da nossa lista através do
+    // Java Generics
+    public T buscaPorPosicao(int posicao) {
+        // E aqui a gente vai buscar por posição passando a posição só que ao final a gente vai pegar apenas o elemento
+        // Existe um risco aqui se a posição não existir ou se a posição existir e o metodo 'buscaPorPosicao' retornar nulo isso
+        // daqui vai dar uma exceção
+        return this.buscaNo(posicao).getElemento();
+    }
+
+    // O segundo método nós vamos pesquisar se um elemento existe ou não na nossa lista, então aqui nós vamos retornar um inteiro
+    // e o Java e outras linguagens tem também uma convenção dos valores que são retornados, também vou chamar de busca só que vou
+    // passar qual que é o elemento que estou procurando
+    public int busca(T elemento) {
+        // No início dele eu quero percorrer a lista toda e pra cada elemento da lista eu vou ter que verificar se o valor do
+        // elemento é o elemento que estou procurando
+        // Vamos declrar um nó atual que vai receber o primeiro elemento da lista que é o início
+        No<T> noAtual = this.inicio;
+
+        // Nada mais natural do que a gente começar a posição com 0 já que no Java qualquer índice começa com 0 de arrays
+        int pos = 0;
+
+        // E nós vamos começar a iterar, pra fazer isso nós vamos comparar o nó atual pra ele ser diferente de nulo, lembrando
+        // que quando a nossa lista termina o nó que nós estamos iterando, o nó que estamos utilizando para iteração vai ter o
+        // valor de nulo, então é assim que a gente sabe quando sair desse loop while
+        while (noAtual != null) {
+            // Só que antes a gente vai comprar se esse nó é o nó que tem o elemento que estamos procurando, só que no Java não
+            // adianta você fazer o '==' aqui, lembra que no Java o '==' faz a comparação da referência, ou seja, o Java vai
+            // comparar se o endereço da memória desse elemento é o mesmo endereço da memória de onde nós estamos guardando esse
+            // nó atual aqui e lembrando que você pode ter objetos com exatamente os mesmos valores, porém eles são duplicados e
+            // estão guardados em lugares diferentes na memória, então é por isso que quando a gente faz comparação a gente vai
+            // utilizar o metodo equals, nesse caso qualquer objeto que você esteja tipando aqui vai ser recomendado que essa
+            // classe tenha a implementação do metodo equals é por isso no Java quando a gente declara uma classe nova sempre é
+            // recomendado você implementar o metodo equals justamente para casos como esse
+            if (noAtual.getElemento().equals(elemento)) {
+                // Então, se achou nós vamos retornar a posição só que pra gente poder ter essa posição a gente também precisa
+                // fazer o tracking a gente precisa guardar qual posição que nós estamos iterando
+                return pos;
+            }
+            // Se a gente não achou nós vamos iterar a posição através do 'pos++' que seria a mesma coisa que: 'pos += 1'
+            // 'pos = pos + 1'
+            pos++;
+
+            // E pra poder mover esse nó atual a gente sempre vai pegar o nó atual e pegar o seu próximo
+            noAtual = noAtual.getProximo();
+        }
+        // E se não achar? O zero aqui está representando o primeiro elemento e a nossa lista pode ter mais de um elemento, então
+        // está esperando aqui um valor positivo ou zero, a convenção de várias linguagens de programação é retornar o -1 que caso
+        // não encontre
+        return NAO_ENCONTRADO;
+    }
+
     // Imagine o seguinte problema: dado uma lista encadeada você quer percorrer cada elemento e a gente quer imprimir na tela o
     // valor de cada elemento como é que a gente pode fazer isso? Pra gente poder fazer isso a gente vai começar com uma referência
     // que a gente também chama de vez em quando de ponteiro, geralmente vai ser uma variável chamada 'atual', e essa variável 'atual'
@@ -188,5 +275,4 @@ public class ListaEncadeada<T> {
         return builder.toString();
     }
 
-    
 }

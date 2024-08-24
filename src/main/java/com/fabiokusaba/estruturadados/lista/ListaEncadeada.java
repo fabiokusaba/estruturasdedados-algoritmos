@@ -38,6 +38,9 @@ public class ListaEncadeada<T> {
     // acaba adotando é declarar uma variável que indique aquilo que a gente queira fazer 
     private final int NAO_ENCONTRADO = -1;
 
+    private final String NAO_EXISTE = "Posição não existe.";
+    private final String LISTA_VAZIA = "Lista está vazia.";
+
     // O próximo passo é criarmos o nosso primeiro metodo para poder adicionar um elemento
     // Aqui nesse metodo o nó é algo interno nosso, então para quem vai usar essa lista a única coisa que importa é o objeto
     // é o valor
@@ -132,8 +135,8 @@ public class ListaEncadeada<T> {
         // tenho 4 elementos mas eu quero adicionar na posição 6, então a gente vai lançar uma exceção
         // Aí sim, aqui no final vai significar que se não é no início e não é no final significa que nós vamos adicionar no meio da
         // lista 
-        if (posicao < 0 || posicao > this.tamanho) {
-            throw new IllegalArgumentException("Posição inválida.");
+        if (this.posicaoNaoExiste(posicao)) {
+            throw new IllegalArgumentException(NAO_EXISTE);
         }
 
         // Existem dois casos: se o tamanho da minha lista for 0 é só adicionar no início, agora se o tamanho não for 0 mas a minha
@@ -180,7 +183,7 @@ public class ListaEncadeada<T> {
         // e tentar remover o elemento a gente precisa gerar uma exceção porque afinal nós não temos nenhum elemento nessa lista
         if (this.tamanho == 0) {
             // Se o tamanho for igual a 0 significa que não tem elementos e a gente pode lançar uma exceção
-            throw new RuntimeException("Lista está vazia.");
+            throw new RuntimeException(LISTA_VAZIA);
         }
         // Guardando a referência do valor do elemento a ser removido
         T removido = this.inicio.getElemento();
@@ -213,7 +216,7 @@ public class ListaEncadeada<T> {
         // então não adianta a gente remover do final
         if (this.tamanho == 0) {
             // Se o tamanho for igual a 0 significa que não tem elementos e a gente pode lançar uma exceção
-            throw new RuntimeException("Lista está vazia.");
+            throw new RuntimeException(LISTA_VAZIA);
         }
 
         // Se a gente tiver apenas um elemento, se o tamanho for igual a 1, a gente não precisa se dar esse trabalho a gente
@@ -238,6 +241,68 @@ public class ListaEncadeada<T> {
 
         // E ao final retornamos o nó removido
         return removido;
+    }
+
+    // Para facilitar vou criar um metodo para verificar se essa posição existe ou não
+    private boolean posicaoNaoExiste(int posicao) {
+        // E como é que a gente sabe se a posição existe ou não, então vamos verificar uma posição que seja válida e se
+        // eu quero saber que a posição não existe é só eu fazer a negação aqui com a exclamação e aí sim a gente sabe que
+        // essa posição não existe
+        return !(posicao >= 0 && posicao <= this.tamanho);
+    }
+
+    // Remover elemento de qualquer posição: suponha que nós temos essa lista com 4 elementos com os elementos 1 - 2 - 4 - 5,
+    // e a gente queira remover o elemento número 4 que está ali bem no meio da lista, então como é que nós vamos fazer isso?
+    // Nós vamos navegar até a posição anterior ao elemento e a gente fez algo parecido quando a gente quis adicionar no meio
+    // da lista também, então a gente vai navegar até o elemento anterior nós vamos ter uma referência para o elemento que nós
+    // queremos remover que vai ser o elemento atual e pra fazer isso a gente já viu é só fazer o 'anterior.getProximo' onde
+    // nós temos o elemento atual, então navegando até o elemento anterior e a gente também tem o elemento atual é só fazer o
+    // anterior igual ao 'atual.getProximo' assim a gente faz uma nova referência uma nova ponte entre o anterior e o
+    // 'atual.getProximo' eliminando aí o elemento atual
+    public T remove(int posicao) {
+        // Se a posição que a gente está querendo remover é uma posição que não existe, então a gente vai retornar o posição
+        // inválida
+        if (this.posicaoNaoExiste(posicao)) {
+            throw new IllegalArgumentException(NAO_EXISTE);
+        }
+
+        // Nós vamos ter 3 casos aqui que é para simplificar o nosso algoritmo, se passou da linha de cima nós sabemos que a
+        // posição existe a outra coisa que eu vou verificar é se a posição é igual a 0, se eu estou querendo remover o
+        // primeiro elemento a gente já fez isso então a gente pode colocar aqui o metodo 'removeInicio'
+        if (posicao == 0) {
+            return this.removeInicio();
+        }
+
+        // Se a gente sabe que a posição é igual ao 'tamanho - 1', ou seja, nós estamos querendo remover o último elemento e a
+        // gente também já tem esse algoritmo pronto
+        if (posicao == this.tamanho - 1) {
+            return this.removeFinal();
+        }
+        
+        // E agora o que vai sobrar pra gente é a gente remover do meio voltando ao que vimos a gente sabe que a gente vai ter
+        // que percorrer até o elemento anterior a posição que estou querendo buscar, então a gente vai pegar aqui até o nó
+        // anterior então a gente pode buscar por essa célula na 'posicao - 1' porque eu quero a posição anterior da posição
+        // do que realmente estou buscando da posição que estou querendo remover
+        No<T> noAnterior = this.buscaNo(posicao - 1);
+
+        // Depois que eu tenho o nó anterior a gente precisa saber qual que é o nó que a gente está querendo remover exatamente
+        // que vai ser o nó atual
+        No<T> atual = noAnterior.getProximo();
+
+        // Qual que vai ser o próximo nó?
+        No<T> proximo = atual.getProximo();
+
+        // Com isso feito a gente tem todas as referências dos nós, então agora é só questão de você fazer as ligações
+        noAnterior.setProximo(proximo);
+
+        // Opcional: se você desejar você também pode fazer aqui só pra limpar o link entre o atual e o próximo você pode
+        // fazer aqui o 'atual.setProximo' como nulo para remover esse link também
+        atual.setProximo(null);
+
+        this.tamanho--;
+
+        // E no final retornamos o 'atual.getElemento' que foi o elemento que removemos da lista
+        return atual.getElemento();
     }
 
     // Além disso, vou criar também um metodo para retornar esse 'tamanho', lembrando que não temos um set para esse 'tamanho'
@@ -287,9 +352,9 @@ public class ListaEncadeada<T> {
         // Então, antes de começar a fazer a gente vai precisar verificar se a posição existe
         // Se a posição for maior ou igual a 0, e se a posição for menor ou igual ao tamanho da nossa lista significa que a gente
         // tem uma posição que existe, mas nesse caso eu quero verificar se a posição não existe então basta eu negar a expressão
-        if (!(posicao >= 0 && posicao <= this.tamanho)) {
+        if (this.posicaoNaoExiste(posicao)) {
             // Se esse for o caso, a posição não existir, a gente vai lançar uma exceção
-            throw new IllegalArgumentException("Posição não existe");
+            throw new IllegalArgumentException(NAO_EXISTE);
         }
 
         // E aí sim a gente pode colocar a nossa lógica aqui porque a gente sabe que vai ser uma lógica válida que a gente já fez

@@ -200,6 +200,46 @@ public class ListaEncadeada<T> {
         return removido;
     }
 
+    // Removendo um elemento do final da lista: dado uma lista encadeada com 4 elementos 1 - 2 - 4 - 5, nós queremos remover
+    // o último elemento da lista, ou seja, nós queremos remover o elemento número 5 então como é que vai funcionar esse
+    // algoritmo? Nós vamos percorrer a nossa lista até o penúltimo elemento, ou seja, até o elemento antes do elemento que
+    // a gente quer remover, então depois da gente percorrer até o penúltimo o que nós vamos fazer é o penúltimo o seu próximo
+    // apontar para nulo assim a gente perde a referência daquele elemento que está sendo removido e é claro depois que a gente
+    // fizer isso a gente também precisa atualizar a referência do último elemento e o último elemento passa a apontar para o
+    // penúltimo e assim tudo fica atualizado e aquele elemento que foi removido a gente pode limpar ele ou então retornar aquele
+    // elemento caso seja a decisão que a gente faça no nosso algoritmo
+    public T removeFinal() {
+        // De novo a gente precisa fazer algumas validações: se o tamanho for igual a 0 significa que a nossa lista está vazia
+        // então não adianta a gente remover do final
+        if (this.tamanho == 0) {
+            // Se o tamanho for igual a 0 significa que não tem elementos e a gente pode lançar uma exceção
+            throw new RuntimeException("Lista está vazia.");
+        }
+
+        // Se a gente tiver apenas um elemento, se o tamanho for igual a 1, a gente não precisa se dar esse trabalho a gente
+        // pode reutilizar o nosso metodo 'removeInicio' já que a gente tem apenas um elemento na lista
+        if (this.tamanho == 1) {
+            return this.removeInicio();
+        }
+
+        // Se chegar nessa linha de código significa que a gente tem pelo menos dois elementos na nossa lista, então a gente vai
+        // percorrer até o penúltimo elemento
+        // Vou guardar a referência para o penúltimo e aqui a gente pode fazer a 'buscaNo' passando uma posição e a gente viu lá
+        // com 4 elementos a gente precisa do 'tamanho - 2' porque a gente quer ir pelo penúltimo
+        No<T> penultimoNo = this.buscaNo(this.tamanho - 2);
+
+        // A gente pode também guardar o elemento removido e nesse caso vai ser o próximo nó ao penúltimo
+        T removido = penultimoNo.getProximo().getElemento();
+
+        // Antes de retornar precisamos colocar qual que é a lógica
+        penultimoNo.setProximo(null);
+        this.ultimo = penultimoNo;
+        this.tamanho--;
+
+        // E ao final retornamos o nó removido
+        return removido;
+    }
+
     // Além disso, vou criar também um metodo para retornar esse 'tamanho', lembrando que não temos um set para esse 'tamanho'
     // porque essa variável vai ficar disponível apenas internamente pra gente
     public int getTamanho() {

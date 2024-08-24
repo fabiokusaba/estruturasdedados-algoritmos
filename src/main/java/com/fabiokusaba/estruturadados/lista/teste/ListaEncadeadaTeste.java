@@ -1,5 +1,7 @@
 package com.fabiokusaba.estruturadados.lista.teste;
 
+import java.util.LinkedList;
+
 import com.fabiokusaba.estruturadados.lista.ListaEncadeada;
 
 public class ListaEncadeadaTeste {
@@ -9,7 +11,48 @@ public class ListaEncadeadaTeste {
         // adicionaPosicao();
         // removeInicio();
         // removeFinal();
-        removePosicao();
+        // removePosicao();
+        testeLinkedList();
+    }
+
+    public static void testeLinkedList() {
+        LinkedList<Integer> lista = new LinkedList<>();
+
+        // Adicionar ao final da lista
+        lista.add(1);
+
+        // Adicionando um primeiro elemento
+        lista.addFirst(0);
+
+        // Adicionando um último elemento
+        lista.addLast(3);
+
+        // Busca para ver se existe o elemento ou não e o Java utiliza o metodo 'contains' para verificar se existe
+        // ou não
+        System.out.println(lista.contains(1));
+
+        // Além disso o 'add' é sobrecarregado então a gente também tem a opção de passar uma posição e o elemento
+        lista.add(2, 2);
+
+        // Imprimindo a nossa lista
+        System.out.println(lista);
+
+        // Além disso, a gente pode também remover existe o metodo para remover todos os elementos 'removeAll' para você
+        // limpar a lista que seria equivalente ao nosso 'limpa', esse metodo 'remove' que vai remover o primeiro elemento
+        // da lista
+        lista.remove();
+        System.out.println(lista);
+        
+        // A gente pode remover da posição 0 que nesse caso vai ser o elemento 1
+        lista.remove(0);
+
+        // A gente pode 'removeFirst' para remover o primeiro elemento da lista
+        lista.removeFirst();
+
+        // A gente também pode fazer aqui um 'removeLast' para remover o último elemento da lista
+        lista.removeLast();
+
+        System.out.println(lista);
     }
 
     public static void removePosicao() {

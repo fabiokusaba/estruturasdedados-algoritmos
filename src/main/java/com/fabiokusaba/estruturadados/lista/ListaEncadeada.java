@@ -168,6 +168,38 @@ public class ListaEncadeada<T> {
         }
     }
 
+    // Remover o elemento do início da lista, para isso vamos ver o conceito primeiro: dado uma lista com 4 elementos nós temos
+    // os elementos 1 - 2 - 4 - 5, a gente deseja remover o primeiro elemento dessa lista que no caso do nosso exemplo é o 1
+    // então como é que seria? Simplesmente nós vamos pegar o início que antes estava apontando para o número 1 e nós temos que
+    // passar o início essa referência do início para o elemento número 2 como é que a gente faz isso? Se o início estava no
+    // elemento número 1 é a gente fazer o início receber o próximo e é claro a gente vai ter que diminuir o tamanho também
+    // a gente vai ter que validar se a posição existe a gente também vai ter que remover a quantidade de elementos do tamanho
+    // da nossa lista, porém o conceito é esse
+    public T removeInicio() {
+        // A primeira coisa que nós precisamos fazer é verificar se a lista está vazia ou não porque se eu apenas criar a lista
+        // e tentar remover o elemento a gente precisa gerar uma exceção porque afinal nós não temos nenhum elemento nessa lista
+        if (this.tamanho == 0) {
+            // Se o tamanho for igual a 0 significa que não tem elementos e a gente pode lançar uma exceção
+            throw new RuntimeException("Lista está vazia.");
+        }
+        // Guardando a referência do valor do elemento a ser removido
+        T removido = this.inicio.getElemento();
+        this.inicio = this.inicio.getProximo();
+        this.tamanho--;
+
+        // Se o tamanho for igual a 0 depois que eu remover o elemento a gente também tem que remover a referência do último
+        // porque se não o último vai continuar apontando para onde estava antes
+        // Se a gente tiver apenas um elemento na nossa lista significa que eu tenho apenas um elemento e isso significa que o
+        // primeiro elemento o seu próximo já é nulo então o início já vai receber nulo aqui caso seja esse cenário por isso
+        // não é necessário colocar o 'this.inicio = null' também
+        if (this.tamanho == 0) {
+            this.ultimo = null;
+        }
+
+        // Ao final retornamos o elemento removido
+        return removido;
+    }
+
     // Além disso, vou criar também um metodo para retornar esse 'tamanho', lembrando que não temos um set para esse 'tamanho'
     // porque essa variável vai ficar disponível apenas internamente pra gente
     public int getTamanho() {

@@ -95,6 +95,79 @@ public class ListaEncadeada<T> {
         // nossa lista sempre no final
     }
 
+    public void adicionaInicio(T elemento) {
+        // Aqui novamente a gente tem dois casos: o primeiro caso é se o tamanho é igual a 0 e o segundo caso é o que nós vamos ver
+        if (this.tamanho == 0) {
+            // Se o tamanho for igual a 0, o que nós vamos fazer? Nós vamos criar esse nó, o início passa a ser esse novo nó, o
+            // último passa a ser esse novo nó e claro a gente aumenta o tamanho
+            No<T> novoNo = new No<T>(elemento);
+            this.inicio = novoNo;
+            this.ultimo = novoNo;
+            
+        } else {
+            // Se não é aquele caso nós vamos criar o novo nó, se a gente olhar aqui na definição a gente já tem o construtor pra
+            // setar o próximo elemento, então existem duas formas de você fazer isso: você pode utilizar o 'setProximo' ou então
+            // você pode simplesmente passar direto no construtor
+            No<T> novoNo = new No<T>(elemento, this.inicio);
+            // novoNo.setProximo(this.inicio);
+
+            // E aí sim o início passa a ser o novo nó
+            this.inicio = novoNo;
+        }
+
+        this.tamanho++;
+    }
+
+    // Aqui nós vamos criar um método que possibilite a gente adicionar em qualquer lugar da nossa lista
+    public void adiciona(int posicao, T elemento) {
+        // Para esse método a gente vai explorar três cenários diferentes: o primeiro cenário é se a lista está vazia, ou seja, o
+        // tamanho da lista é igual a 0, uma outra forma de verificar isso é se o início é nulo
+        // A outra opção é a gente verificar, se a lista não está vazia significa que ela tem elementos, e o que eu quero verificar
+        // agora é se a posição é igual ao tamanho da lista, ou seja, se eu tenho 4 elementos na minha lista e eu estou adicionando
+        // na posição 4 significa que a posição vai ser igual ao tamanho, se a posição for igual ao tamanho significa que eu quero
+        // adicionar na última posição então apenas adiciona o elemento, esse é o mais fácil porque já temos o nosso metodo 'adiciona'
+        // que adiciona um elemento no final então precisamos apenas chamar ele
+        // Mas, agora ainda tem uma outra questão se a posição que estou querendo adicionar posição -1 ou se é maior que o tamanho
+        // vai gerar uma exceção, então se a posição for menor que 0 ou se a posição for maior que o tamanho da lista, ou seja, eu
+        // tenho 4 elementos mas eu quero adicionar na posição 6, então a gente vai lançar uma exceção
+        // Aí sim, aqui no final vai significar que se não é no início e não é no final significa que nós vamos adicionar no meio da
+        // lista 
+        if (posicao < 0 || posicao > this.tamanho) {
+            throw new IllegalArgumentException("Posição inválida.");
+        }
+
+        // Existem dois casos: se o tamanho da minha lista for 0 é só adicionar no início, agora se o tamanho não for 0 mas a minha
+        // posição é 0, ou seja, se a posição for 0 mas a minha lista não está vazia eu quero fazer com que esse nó seja o primeiro
+        // elemento, o que a gente vai precisar fazer nesse caso? A gente vai pegar esse novo nó apontar para o início e aí sim a
+        // gente faz o início apontar para o novo nó para a gente não perder essas referências
+        if (posicao == 0) { // está vazia
+            this.adicionaInicio(elemento);
+        } else if (posicao == this.tamanho) { // adiciona
+            this.adiciona(elemento);
+        } else { // meio
+            // A questão é como a gente vai adicionar um elemento quando está no meio, o que a gente está querendo fazer é buscar
+            // pela posição então eu vou buscar o nó anterior que na verdade vai buscar a posição que eu estou querendo inserir
+            // que é a posição anterior onde eu quero inserir, então aqui eu vou fazer a busca do nó na posição que estou querendo
+            // inserir
+            No<T> noAnterior = this.buscaNo(posicao);
+
+            // Com essa referência feita eu posso guardar qual que é o próximo nó
+            No<T> proximoNo = noAnterior.getProximo();
+
+            // Agora sim, eu já posso criar a minha célula nova
+            // E duas opções de novo que você pode fazer: você pode pegar esse novo nó e usar o metodo 'setProximo' ou você pode
+            // passar direto no construtor
+            No<T> novoNo = new No<T>(elemento, proximoNo);
+            // novoNo.setProximo(proximoNo);
+
+            // E agora sim, o nó anterior 'setProximo' vai ser o novo nó
+            noAnterior.setProximo(novoNo);
+
+            // E por último nós vamos iterar o tamanho da lista
+            this.tamanho++;
+        }
+    }
+
     // Além disso, vou criar também um metodo para retornar esse 'tamanho', lembrando que não temos um set para esse 'tamanho'
     // porque essa variável vai ficar disponível apenas internamente pra gente
     public int getTamanho() {
